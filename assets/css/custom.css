@@ -1,0 +1,323 @@
+/* Custom CSS for Prize Website */
+
+/* Canvas-based Wheel of Fortune */
+.wheel-container {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    margin: 0 auto;
+}
+
+.wheel-canvas {
+    border-radius: 50%;
+    border: 8px solid #fbbf24;
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.5);
+    background: #ffffff;
+}
+
+.wheel-pointer {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 30px solid #ef4444;
+    z-index: 10;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Mystery Box Animations */
+.mystery-box {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #8B5CF6, #3B82F6);
+    border-radius: 16px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.mystery-box:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 40px rgba(139, 92, 246, 0.4);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.mystery-box.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.mystery-box.selected {
+    transform: scale(1.2);
+    filter: brightness(1.2);
+    box-shadow: 0 16px 48px rgba(139, 92, 246, 0.6);
+    border-color: #FBBF24;
+}
+
+.mystery-box.opening {
+    animation: boxOpen 1s ease-in-out;
+}
+
+.mystery-box-icon {
+    font-size: 3rem;
+    color: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+}
+
+.mystery-box:hover .mystery-box-icon {
+    color: #FBBF24;
+    transform: scale(1.1);
+}
+
+.mystery-box.selected .mystery-box-icon {
+    color: #FBBF24;
+    animation: bounce 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes boxOpen {
+    0% { transform: scale(1.2); }
+    50% { transform: scale(1.4) rotateY(180deg); }
+    100% { transform: scale(1.2) rotateY(360deg); }
+}
+
+@keyframes bounce {
+    0% { transform: scale(1.1); }
+    100% { transform: scale(1.3); }
+}
+
+.box-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.box-body {
+    width: 100%;
+    height: 70%;
+    background: linear-gradient(45deg, #8b5cf6, #a855f7);
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+}
+
+.box-lid {
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(45deg, #7c3aed, #8b5cf6);
+    border-radius: 10px 10px 5px 5px;
+    position: absolute;
+    top: -5%;
+    transition: transform 0.8s ease;
+    transform-origin: bottom;
+    box-shadow: 0 5px 15px rgba(124, 58, 237, 0.4);
+}
+
+.box-ribbon-v {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 100%;
+    background: linear-gradient(to bottom, #fbbf24, #f59e0b);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.box-ribbon-h {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 20px;
+    background: linear-gradient(to right, #fbbf24, #f59e0b);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.box-bow {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 30px;
+    background: #ef4444;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    box-shadow: 0 3px 10px rgba(239, 68, 68, 0.4);
+}
+
+.box-bow::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 15px;
+    background: #dc2626;
+    border-radius: 2px;
+}
+
+.mystery-box.opening .box-lid {
+    transform: rotateX(-120deg);
+}
+
+/* Prize Reveal Animation */
+.prize-reveal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.prize-reveal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.prize-content {
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 400px;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+}
+
+.prize-reveal.show .prize-content {
+    transform: scale(1);
+}
+
+/* Confetti Animation */
+.confetti {
+    position: fixed;
+    top: -10px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
+}
+
+.confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #fbbf24;
+    animation: confetti-fall 3s linear infinite;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Loading Spinner */
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f4f6;
+    border-top: 4px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Pulse Animation */
+.pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-glow {
+    from {
+        box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+    }
+    to {
+        box-shadow: 0 0 40px rgba(251, 191, 36, 0.8);
+    }
+}
+
+/* Floating Animation */
+.float {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .wheel-container {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .mystery-box {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .prize-content {
+        margin: 1rem;
+        padding: 2rem;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(251, 191, 36, 0.6);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(251, 191, 36, 0.8);
+}
